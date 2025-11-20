@@ -1,0 +1,16 @@
+User
+- firstName: required
+- lastName
+- email: required, unique
+- password: required
+- phone: unique
+- address
+Role
+- name: required, unique
+- description
+
+UserRole
+- user_id: references Usercompare(passwor
+- role_id: references Role
+User-Role Relationship:
+Many-to-Many

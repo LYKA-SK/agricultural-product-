@@ -6,7 +6,7 @@ dotenv.config();
 const MONGO_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/AgriConnect";
 
-const connectDB = async (): Promise<void> => {
+export const connectMongo = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGO_URI);
     console.log("✅ MongoDB connected");
@@ -15,5 +15,3 @@ const connectDB = async (): Promise<void> => {
     process.exit(1);
   }
 };
-
-export default connectDB;

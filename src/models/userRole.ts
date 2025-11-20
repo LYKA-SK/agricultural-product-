@@ -1,41 +1,13 @@
-import { DataTypes } from "sequelize";
-import { sequelize } from "../config/database";
-import User from "../models/userModels";
-import Role from "../models/role";
+import mongoose, { Schema, Document } from "mongoose";
 
-const UserRole = sequelize.define(
-  "UserRole",
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
+export interface IUserRole extends Document {
+  user_id: mongoose.Types.ObjectId;
+  role_id: mongoose.Types.ObjectId;
+}
 
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: User,
-        key: "id",
-      },
-    },
+const userRoleSchema = new Schema<IUserRole>({
+  user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  role_id: { type: Schema.Types.ObjectId, ref: "Role", required: true },
+});
 
-    role_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Role,
-        key: "id",
-      },
-    },
-  },
-  {
-    tableName: "user_role",
-    timestamps: false,
-  }
-);
-
-// Relationships
-User.belongsToMany(Role, { through: UserRole, foreignKey: "user_id" });
-Role.belongsToMany(User, { through: UserRole, foreignKey: "role_id" });
-
-export default UserRole;
+export default mongoose.model<IUserRole>("UserRole", userRoleSchema);
