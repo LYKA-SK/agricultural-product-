@@ -1,9 +1,9 @@
-import { Schema, model, Document, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IUser } from "../types/authType";
 
 const userSchema = new Schema<IUser>(
   {
-    name: { type: String, required: true },
+    name: { type: String },
     phone: { type: String, required: true },
     address: { type: String, required: true },
     email: { type: String, required: true, unique: true },

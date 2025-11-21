@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createRole } from "../controllers/userRoleController";
+import { createRole } from "../controllers/roleController";
 
 const router = Router();
 
@@ -39,6 +39,6 @@ const router = Router();
  *         description: Role already exists or bad request
  */
 
-router.post("/role-create", createRole);
+router.post("/create-role", createRole);
 
 export default router;
