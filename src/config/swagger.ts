@@ -13,6 +13,16 @@ const options: swaggerJsdoc.Options = {
         url: "http://localhost:3000",
       },
     ],
+    comments: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+      security: [],
+    },
   },
   apis: ["./src/routes/*.ts"], // path to your route files with swagger comments
 };

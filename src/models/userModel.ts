@@ -1,15 +1,26 @@
 import { Schema, model } from "mongoose";
-import { IUser } from "../types/authType";
+import { IProduct } from "../types/productType";
 
-const userSchema = new Schema<IUser>(
+const ProductSchema = new Schema<IProduct>(
   {
-    name: { type: String },
-    phone: { type: String, required: true },
-    address: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    description: { type: String },
+    stock: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
 
-export default model<IUser>("User", userSchema);
+export default model<IProduct>("Product", ProductSchema);
