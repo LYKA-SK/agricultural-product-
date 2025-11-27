@@ -1,6 +1,10 @@
 // src/controllers/authController.ts
 import { Request, Response } from "express";
-import { registerService, loginService } from "../services/authService";
+import {
+  registerService,
+  loginService,
+  logoutService,
+} from "../services/authService";
 
 export const registerController = async (req: Request, res: Response) => {
   const result = await registerService(req, res);
@@ -8,5 +12,9 @@ export const registerController = async (req: Request, res: Response) => {
 };
 export const loginController = async (req: Request, res: Response) => {
   const result = await loginService(req, res);
+  return result;
+};
+export const logoutController = async (req: Request, res: Response) => {
+  const result = await logoutService(req, res);
   return result;
 };

@@ -13,7 +13,8 @@ const options: swaggerJsdoc.Options = {
         url: "http://localhost:3000",
       },
     ],
-    comments: {
+
+    components: {
       securitySchemes: {
         bearerAuth: {
           type: "http",
@@ -21,10 +22,17 @@ const options: swaggerJsdoc.Options = {
           bearerFormat: "JWT",
         },
       },
-      security: [],
     },
+
+    // If you want ALL routes to require JWT:
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: ["./src/routes/*.ts"], // path to your route files with swagger comments
+
+  apis: ["./src/routes/*.ts"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);

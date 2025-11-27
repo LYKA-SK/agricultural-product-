@@ -45,6 +45,7 @@ export const registerService = async (req: Request, res: Response) => {
     return res.status(500).json({ Message: "internal server error" });
   }
 };
+//login
 export const loginService = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -62,21 +63,20 @@ export const loginService = async (req: Request, res: Response) => {
       Message: "Login successful",
       data: user,
       accessToken,
-      refreshToken,
     });
   } catch {
     return res.status(500).json({ Message: "internal server error" });
   }
 };
+export const logoutService = async (req: Request, res: Response) => {
+  try {
+    // If token stored in cookies → clear it
+    res.clearCookie("refreshToken");
 
-// LOGOUT
-// export const logoutService = async (req: Request, res: Response) => {
-//   try {
-//     res.clrearCookie("refreshToken", {
-//       httpOnly: true,
-//       secure: true,
-//       sameSite: "strict",
-//     });
-//     return res.status(200).json({ Message: "Logout successful" });
-//   }
-// }
+    return res.status(200).json({
+      Message: "Logout successful",
+    });
+  } catch (error) {
+    return res.status(500).json({ Message: "Internal server error" });
+  }
+};

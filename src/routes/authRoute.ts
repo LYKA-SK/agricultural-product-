@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   registerController,
   loginController,
+  logoutController,
 } from "../controllers/authController";
 
 const router = Router();
@@ -55,6 +56,7 @@ const router = Router();
  *       400:
  *         description: Bad request
  */
+router.post("/register", registerController);
 /**
  * @swagger
  * /api/v1/auth/login:
@@ -73,10 +75,10 @@ const router = Router();
  *             properties:
  *               email:
  *                 type: string
- *                 example: "lyka@gmail.com"
+ *                 example: "admin@agriconnect.com"
  *               password:
  *                 type: string
- *                 example: "1234567"
+ *                 example: "Admin@1234"
  *     responses:
  *       200:
  *         description: Login successful
@@ -84,8 +86,20 @@ const router = Router();
  *         description: Invalid email or password
  */
 
-router.post("/register", registerController);
-
 router.post("/login", loginController);
+/**
+ * @swagger
+ * /api/v1/auth/logout:
+ *   post:
+ *     summary: Logout a user
+ *     tags: [Auth]
+ *     description: Clears refresh token or ends user session.
+ *     responses:
+ *       200:
+ *         description: Logout successful
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/logout", logoutController);
 
 export default router;

@@ -1,12 +1,11 @@
 import { Router } from "express";
 import {
   createUserController,
-  getUserController,
+  getUsersController, // <-- updated name
   getUserByIdController,
   updateUserController,
   deleteUserController,
 } from "../controllers/userController";
-import { get } from "http";
 
 const router = Router();
 
@@ -37,79 +36,36 @@ const router = Router();
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Bin Lyka"
  *               phone:
  *                 type: string
- *                 example: "087123456"
  *               address:
  *                 type: string
- *                 example: "Phnom Penh, Cambodia"
  *               email:
  *                 type: string
- *                 example: "lyka@gmail.com"
  *               password:
  *                 type: string
- *                 example: "secret123"
  *     responses:
  *       201:
  *         description: User created successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: User created successfully
- *                 user:
- *                   type: object
  *       400:
  *         description: Validation error or duplicate email
  */
-
 router.post("/create-user", createUserController);
+
 /**
  * @swagger
- * /api/v1/user/get-user:
+ * /api/v1/user/get-users:
  *   get:
  *     summary: Get all users
  *     tags: [User]
  *     responses:
  *       200:
  *         description: List of all users
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Users fetched successfully
- *                 users:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                         example: "6745a3e12c4bf829ab12fcd0"
- *                       name:
- *                         type: string
- *                         example: "Bin Lyka"
- *                       phone:
- *                         type: string
- *                         example: "087123456"
- *                       address:
- *                         type: string
- *                         example: "Phnom Penh"
- *                       email:
- *                         type: string
- *                         example: "lyka@gmail.com"
  *       500:
  *         description: Server error
  */
+router.get("/get-users", getUsersController); // <-- updated
 
-router.get("/get-user", getUserController);
 /**
  * @swagger
  * /api/v1/user/get-user/{id}:
@@ -122,44 +78,14 @@ router.get("/get-user", getUserController);
  *         required: true
  *         schema:
  *           type: string
- *         description: The user ID
- *         example: 6745a3e12c4bf829ab12fcd0
  *     responses:
  *       200:
- *         description: User fetched successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: User fetched successfully
- *                 user:
- *                   type: object
- *                   properties:
- *                     _id:
- *                       type: string
- *                       example: "6745a3e12c4bf829ab12fcd0"
- *                     name:
- *                       type: string
- *                       example: "Bin Lyka"
- *                     phone:
- *                       type: string
- *                       example: "087123456"
- *                     address:
- *                       type: string
- *                       example: "Phnom Penh, Cambodia"
- *                     email:
- *                       type: string
- *                       example: "lyka@gmail.com"
+ *         description: User fetched
  *       404:
- *         description: User not found
- *       500:
- *         description: Server error
+ *         description: Not found
  */
-
 router.get("/get-user/:id", getUserByIdController);
+
 /**
  * @swagger
  * /api/v1/user/update-user/{id}:
@@ -170,34 +96,16 @@ router.get("/get-user/:id", getUserByIdController);
  *       - in: path
  *         name: id
  *         required: true
- *         schema:
- *           type: string
  *     requestBody:
  *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 example: "Updated Name"
- *               phone:
- *                 type: string
- *                 example: "098765432"
- *               address:
- *                 type: string
- *                 example: "Siem Reap"
- *               email:
- *                 type: string
- *                 example: "updated@gmail.com"
  *     responses:
  *       200:
- *         description: User updated successfully
+ *         description: Updated
  *       404:
- *         description: User not found
+ *         description: Not found
  */
 router.put("/update-user/:id", updateUserController);
+
 /**
  * @swagger
  * /api/v1/user/delete-user/{id}:
@@ -208,43 +116,12 @@ router.put("/update-user/:id", updateUserController);
  *       - in: path
  *         name: id
  *         required: true
- *         schema:
- *           type: string
- *         description: The user ID
- *         example: 6745a3e12c4bf829ab12fcd0
  *     responses:
  *       200:
- *         description: User deleted successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: User deleted successfully
+ *         description: Deleted
  *       404:
- *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: User not found
- *       500:
- *         description: Server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Internal server error
+ *         description: Not found
  */
-
 router.delete("/delete-user/:id", deleteUserController);
 
 export default router;
